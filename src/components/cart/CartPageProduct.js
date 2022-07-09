@@ -20,6 +20,7 @@ class CartPageProduct extends Component {
         this.props.cart.indexOf(this.props.prod)
       ];
     if (this.state.counter === this.state.images.length + 1) {
+      el.style.transition = "transform 0.4s ease-in-out";
       el.style.transform = "translateX(" + -300 * this.state.counter + "px)";
       setTimeout(() => {
         el.style.transition = "none";
