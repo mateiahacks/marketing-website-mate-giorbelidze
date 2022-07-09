@@ -23,11 +23,15 @@ function isObject(object) {
   return object != null && typeof object === "object";
 }
 
-const initialState = {
-  cart: [],
-  totalQuantity: 0,
-  totalCost: 0,
-};
+const initialState = localStorage.getItem("cart")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : {
+      cart: [],
+      totalQuantity: 0,
+      totalCost: 0,
+    };
+
+let result = null;
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -35,13 +39,15 @@ export default function (state = initialState, action) {
       for (let i = 0; i < state.cart.length; i++) {
         if (deepEqual(state.cart[i], action.payload)) return state;
       }
-      return {
+      result = {
         ...state,
         cart: [...state.cart, action.payload],
         totalQuantity: state.totalQuantity + 1,
       };
+      localStorage.setItem("cart", JSON.stringify(result));
+      return result;
     case "INCREASE":
-      return {
+      result = {
         ...state,
         cart: state.cart.map((p) =>
           deepEqual({ ...p, quantity: 0 }, { ...action.payload, quantity: 0 })
@@ -50,10 +56,12 @@ export default function (state = initialState, action) {
         ),
         totalQuantity: state.totalQuantity + 1,
       };
+      localStorage.setItem("cart", JSON.stringify(result));
+      return result;
     case "DECREASE":
       //If product quantity in cart appears 0 it will be removed from the cart
       if (action.payload.quantity === 0) {
-        return {
+        result = {
           ...state,
           cart: state.cart.filter(
             (p) =>
@@ -64,8 +72,10 @@ export default function (state = initialState, action) {
           ),
           totalQuantity: state.totalQuantity - 1,
         };
+        localStorage.setItem("cart", JSON.stringify(result));
+        return result;
       }
-      return {
+      result = {
         ...state,
         cart: state.cart.map((p) =>
           deepEqual({ ...p, quantity: 0 }, { ...action.payload, quantity: 0 })
@@ -74,6 +84,8 @@ export default function (state = initialState, action) {
         ),
         totalQuantity: state.totalQuantity - 1,
       };
+      localStorage.setItem("cart", JSON.stringify(result));
+      return result;
     default:
       return state;
   }

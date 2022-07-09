@@ -17,6 +17,10 @@ class App extends Component {
     this.props.fetchCurrencies();
   }
 
+  componentWillUnmount() {
+    localStorage.setItem("cart", this.props.cart);
+  }
+
   render() {
     return (
       <Router>
@@ -32,6 +36,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   currencies: state.currencyReducer.currencies,
+  cart: state.cartReducer.cart,
 });
 
 const mapDispatchToProps = {

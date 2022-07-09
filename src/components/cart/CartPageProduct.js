@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { increase, decrease } from "../../actions/cartAction";
 import arrow from "../../images/right-arrow.png";
+import "./CartWindowProduct.css";
 
 class CartPageProduct extends Component {
   constructor(props) {
@@ -76,7 +77,7 @@ class CartPageProduct extends Component {
               <h1 id="name">{prod.name}</h1>
               <h2 id="cart-prod-price">
                 {currency.symbol}
-                {prod.prices[currencies.indexOf(currency)].amount}
+                {prod?.prices[currencies.indexOf(currency)]?.amount}
               </h2>
             </div>
             <div className="attributes">
