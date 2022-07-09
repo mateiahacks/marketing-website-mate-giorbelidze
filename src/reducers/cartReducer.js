@@ -86,6 +86,13 @@ export default function (state = initialState, action) {
       };
       localStorage.setItem("cart", JSON.stringify(result));
       return result;
+    case "RESET_CART":
+      localStorage.removeItem("cart");
+      return {
+        cart: [],
+        totalQuantity: 0,
+        totalCost: 0,
+      };
     default:
       return state;
   }

@@ -17,10 +17,6 @@ class App extends Component {
     this.props.fetchCurrencies();
   }
 
-  componentWillUnmount() {
-    localStorage.setItem("cart", this.props.cart);
-  }
-
   render() {
     return (
       <Router>

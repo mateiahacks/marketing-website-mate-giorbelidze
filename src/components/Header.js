@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { MdFollowTheSigns, MdKeyboardArrowDown } from "react-icons/md";
+import { MdKeyboardArrowDown } from "react-icons/md";
 import { BsCart2 } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { setCategory } from "../actions/categoryAction";
 import { setCurrency, fetchCurrencies } from "../actions/currencyAction";
+import { resetCart } from "../actions/cartAction";
 import CartWindowProduct from "./cart/CartWindowProduct";
 import logo from "../images/logo.png";
 import "./Header.css";
@@ -46,7 +47,22 @@ class Header extends Component {
     this.props.setCategory(cat.name);
   }
 
+  onCheckout() {
+    const err_msg = document.getElementById("empty-cart-header");
+    if (this.props.cart.length > 0) {
+      this.setState({ showCart: false });
+      this.props.resetCart();
+      this.setState({ redirect: "/" });
+      err_msg.style.display = "none";
+    } else {
+      err_msg.style.display = "block";
+    }
+  }
+
   render() {
+    if (this.state.redirect) {
+      return <Navigate to={this.state.redirect} />;
+    }
     return (
       <div>
         <div className="header">
@@ -71,9 +87,13 @@ class Header extends Component {
                 <Link to="/cart" className="text-link">
                   <div id="cart-link">VIEW BAG</div>
                 </Link>
-
-                <div id="checkout">CHECKOUT</div>
+                <div id="checkout" onClick={() => this.onCheckout()}>
+                  CHECKOUT
+                </div>
               </div>
+              <p className="error" id="empty-cart-header">
+                *can't checkout with an empty cart
+              </p>
             </div>
           )}
           <div className="header__left">
@@ -148,6 +168,7 @@ const mapDispatchToProps = {
   setCategory,
   setCurrency,
   fetchCurrencies,
+  resetCart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

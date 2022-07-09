@@ -71,7 +71,7 @@ class CartPageProduct extends Component {
     return (
       <div className="cart-page-prod">
         <div className="cart-product">
-          <div className="info page-info">
+          <div className="info" style={{ marginLeft: "0", paddingLeft: 0 }}>
             <div className="info-header page-info-header">
               <h1 id="brand">{prod.brand}</h1>
               <h1 id="name">{prod.name}</h1>

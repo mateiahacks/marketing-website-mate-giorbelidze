@@ -21,3 +21,10 @@ export const addToCart = (prod) => (dispatch) => {
     payload: prod,
   });
 };
+
+// Reseting cart when ordering
+export const resetCart = () => (dispatch) => {
+  dispatch({
+    type: "RESET_CART",
+  });
+};

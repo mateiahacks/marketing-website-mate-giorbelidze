@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Navigate } from "react-router-dom";
+import { resetCart } from "../../actions/cartAction";
 import Header from "../Header";
 import CartPageProduct from "./CartPageProduct";
 import "./CartWindowProduct.css";
@@ -21,7 +23,21 @@ class Cart extends Component {
       .reduce((first, second) => first + second, 0);
   }
 
+  onCheckout() {
+    const err_msg = document.getElementById("order-err");
+    if (this.props.cart.length > 0) {
+      this.props.resetCart();
+      this.setState({ redirect: "/" });
+      err_msg.style.display = "none";
+    } else {
+      err_msg.style.display = "block";
+    }
+  }
+
   render() {
+    if (this.state.redirect) {
+      return <Navigate to={this.state.redirect} />;
+    }
     const { cart, totalQuantity, currency, currencies } = this.props;
     return (
       <div className="d-flex">
@@ -50,7 +66,12 @@ class Cart extends Component {
               {this.totalSum().toFixed(2)}
             </span>
           </p>
-          <div id="order">ORDER</div>
+          <div id="order" onClick={() => this.onCheckout()}>
+            ORDER
+          </div>
+          <p className="error" id="order-err">
+            *can't checkout with an empty cart
+          </p>
         </div>
       </div>
     );
@@ -64,4 +85,4 @@ const mapStateToProps = (state) => ({
   currencies: state.currencyReducer.currencies,
 });
 
-export default connect(mapStateToProps)(Cart);
+export default connect(mapStateToProps, { resetCart })(Cart);

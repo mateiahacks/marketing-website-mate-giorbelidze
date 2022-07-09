@@ -55,6 +55,7 @@ export const product = (id) => {
         gallery
         brand
         description
+        inStock
         prices {
           currency {
             label

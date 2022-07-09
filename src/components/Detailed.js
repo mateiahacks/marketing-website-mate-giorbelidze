@@ -67,6 +67,20 @@ class Detailed extends Component {
     });
   }
 
+  onAddToCart() {
+    const err_msg = document.getElementById("out-err");
+    if (this.state.product.inStock) {
+      this.props.addToCart({
+        ...this.state.product,
+        attributes: this.state.attributes,
+        quantity: 1,
+      });
+      err_msg.style.display = "none";
+    } else {
+      err_msg.style.display = "block";
+    }
+  }
+
   render() {
     const prod = this.state.product;
 
@@ -130,18 +144,12 @@ class Detailed extends Component {
                     this.props.currencies.indexOf(this.props.currency)
                   ]?.amount}
             </h2>
-            <div
-              id="add_to_cart"
-              onClick={() =>
-                this.props.addToCart({
-                  ...this.state.product,
-                  attributes: this.state.attributes,
-                  quantity: 1,
-                })
-              }
-            >
+            <div id="add_to_cart" onClick={() => this.onAddToCart()}>
               ADD TO CART
             </div>
+            <p className="error" id="out-err">
+              *out of stock
+            </p>
             <div
               id="description"
               dangerouslySetInnerHTML={{ __html: prod.description }}
