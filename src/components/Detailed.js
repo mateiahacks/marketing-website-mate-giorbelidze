@@ -14,6 +14,7 @@ class Detailed extends Component {
       product: {},
       mainImg: "",
       attributes: [],
+      selectedCounter: 0,
     };
   }
 
@@ -27,20 +28,20 @@ class Detailed extends Component {
 
     this.setState({ product: res.data.product });
     this.setState({ mainImg: res.data.product.gallery[0] });
-
+    this.setState({ attributes: attributes });
     // setting selected for the first item for each attriute true by default
-    this.setState({
-      attributes: attributes.map((at) => ({
-        ...at,
-        items: [
-          {
-            ...at.items[0],
-            selected: true,
-          },
-          ...at.items.slice(1),
-        ],
-      })),
-    });
+    // this.setState({
+    //   attributes: attributes.map((at) => ({
+    //     ...at,
+    //     items: [
+    //       {
+    //         ...at.items[0],
+    //         selected: true,
+    //       },
+    //       ...at.items.slice(1),
+    //     ],
+    //   })),
+    // });
   }
 
   componentDidMount() {
@@ -67,17 +68,32 @@ class Detailed extends Component {
     });
   }
 
+  allSelected() {
+    const attributes = this.state.attributes;
+    let selectedCount = 0;
+    for (const attribute of attributes) {
+      for (const item of attribute.items) {
+        if (item.selected === true) selectedCount++;
+      }
+    }
+    return selectedCount === attributes.length;
+  }
+
   onAddToCart() {
-    const err_msg = document.getElementById("out-err");
-    if (this.state.product.inStock) {
+    const out_err_msg = document.getElementById("out-err");
+    const attr_err_msg = document.getElementById("attr-err");
+    if (this.state.product.inStock && this.allSelected()) {
       this.props.addToCart({
         ...this.state.product,
         attributes: this.state.attributes,
         quantity: 1,
       });
-      err_msg.style.display = "none";
+      out_err_msg.style.display = "none";
+      attr_err_msg.style.display = "none";
     } else {
-      err_msg.style.display = "block";
+      !this.state.product.inStock
+        ? (out_err_msg.style.display = "block")
+        : (attr_err_msg.style.display = "block");
     }
   }
 
@@ -149,6 +165,9 @@ class Detailed extends Component {
             </div>
             <p className="error" id="out-err">
               *out of stock
+            </p>
+            <p className="error" id="attr-err">
+              *select all attributes
             </p>
             <div
               id="description"
