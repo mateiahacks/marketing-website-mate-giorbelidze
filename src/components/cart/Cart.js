@@ -38,7 +38,7 @@ class Cart extends Component {
     if (this.state.redirect) {
       return <Navigate to={this.state.redirect} />;
     }
-    const { cart, totalQuantity, currency, currencies } = this.props;
+    const { cart, totalQuantity, currency } = this.props;
     return (
       <div className="d-flex">
         <Header />

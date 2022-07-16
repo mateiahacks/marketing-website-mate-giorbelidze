@@ -75,7 +75,7 @@
     width: 200px;
     aspect-ratio: 1;
     
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
 }
 
@@ -116,7 +116,7 @@
     width: 300px;
     aspect-ratio: 1;
     display: flex;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
     transform: translateX(-300px);
 }
@@ -125,7 +125,7 @@
     width: 300px;
     aspect-ratio: 1;
     display: flex;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
 
 }
@@ -135,6 +135,11 @@
     overflow: hidden;
 }
 
+
+.cart-page-info {
+    margin-left: 0;
+    padding-left: 0;
+}
 
 .cart-page-pm {
     width: 40px;

@@ -3,7 +3,7 @@ const initialState = {
   currency: "",
 };
 
-export default function (state = initialState, action) {
+export default function currencyReducer(state = initialState, action) {
   switch (action.type) {
     case "FETCH_CURRENCIES":
       return {

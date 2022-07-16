@@ -14,7 +14,7 @@ export default class ProductCard extends Component {
     return (
       <div className="card">
         {!this.props.instock && (
-          <div id="overlay">
+          <div id="overlay" className="pdp-overlay">
             <div id="text">OUT OF STOCK</div>
           </div>
         )}
@@ -22,8 +22,8 @@ export default class ProductCard extends Component {
         <p>
           {this.props.brand} {this.props.title}
         </p>
-        <p style={{ fontWeight: "500" }}>
-          {this.props.symb} {this.props.price}
+        <p id="price">
+          {this.props.symb} {this.props.price?.toFixed(2)}
         </p>
       </div>
     );

@@ -24,13 +24,14 @@
     height: 100px;
     margin: 10px;
     cursor: pointer;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
 }
 
 .main-img {
-    width: 600px;
-    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     object-position: center;
     margin-left: 30px;
 }
@@ -40,7 +41,11 @@
     width: 420px;
     padding-right: 30px;
     padding-left: 30px;
-    overflow-y: auto;
+}
+
+.cart-page-info {
+    margin-left: 0;
+    padding-left: 0;
 }
 
 .info_header {
@@ -99,6 +104,16 @@
     outline-offset: 2px;
     outline-width: 1px;
     color: var(--c-primary);
+}
+
+.main-img-container {
+    position: relative;
+    width: 700px;
+}
+
+.pdp-overlay {
+    height: 100%;
+    width: 600px;
 }
 
 .item-swatch {

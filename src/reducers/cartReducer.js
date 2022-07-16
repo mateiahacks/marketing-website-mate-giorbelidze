@@ -33,11 +33,30 @@ const initialState = localStorage.getItem("cart")
 
 let result = null;
 
-export default function (state = initialState, action) {
+export default function cartReducer(state = initialState, action) {
   switch (action.type) {
     case "ADD_TO_CART":
+      // if product with same attributes already in cart
       for (let i = 0; i < state.cart.length; i++) {
-        if (deepEqual(state.cart[i], action.payload)) return state;
+        if (
+          deepEqual(
+            { ...state.cart[i], quantity: 0 },
+            { ...action.payload, quantity: 0 }
+          )
+        ) {
+          return {
+            ...state,
+            cart: state.cart.map((p) =>
+              deepEqual(
+                { ...p, quantity: 0 },
+                { ...state.cart[i], quantity: 0 }
+              )
+                ? { ...state.cart[i], quantity: state.cart[i].quantity + 1 }
+                : p
+            ),
+            totalQuantity: state.totalQuantity + 1,
+          };
+        }
       }
       result = {
         ...state,

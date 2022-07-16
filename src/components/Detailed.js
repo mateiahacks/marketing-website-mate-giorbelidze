@@ -29,19 +29,9 @@ class Detailed extends Component {
     this.setState({ product: res.data.product });
     this.setState({ mainImg: res.data.product.gallery[0] });
     this.setState({ attributes: attributes });
-    // setting selected for the first item for each attriute true by default
-    // this.setState({
-    //   attributes: attributes.map((at) => ({
-    //     ...at,
-    //     items: [
-    //       {
-    //         ...at.items[0],
-    //         selected: true,
-    //       },
-    //       ...at.items.slice(1),
-    //     ],
-    //   })),
-    // });
+
+    const desc = document.getElementById("description");
+    desc.innerHTML = res.data.product.description;
   }
 
   componentDidMount() {
@@ -115,7 +105,14 @@ class Detailed extends Component {
               />
             ))}
           </div>
-          <img className="main-img" src={this.state.mainImg} alt="" />
+          <div className="main-img-container">
+            {!prod.inStock && (
+              <div id="overlay">
+                <div id="text">OUT OF STOCK</div>
+              </div>
+            )}
+            <img className="main-img" src={this.state.mainImg} alt="" />
+          </div>
           <div className="info">
             <div className="info_header">
               <h1 id="brand">{prod.brand}</h1>
@@ -158,7 +155,7 @@ class Detailed extends Component {
                   " " +
                   prod?.prices[
                     this.props.currencies.indexOf(this.props.currency)
-                  ]?.amount}
+                  ]?.amount?.toFixed(2)}
             </h2>
             <div id="add_to_cart" onClick={() => this.onAddToCart()}>
               ADD TO CART
@@ -169,10 +166,7 @@ class Detailed extends Component {
             <p className="error" id="attr-err">
               *select all attributes
             </p>
-            <div
-              id="description"
-              dangerouslySetInnerHTML={{ __html: prod.description }}
-            />
+            <div id="description" />
           </div>
         </div>
       </div>

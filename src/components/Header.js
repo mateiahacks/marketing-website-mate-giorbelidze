@@ -11,13 +11,6 @@ import logo from "../images/logo.png";
 import "./Header.css";
 import "./cart/CartWindowProduct.css";
 
-const catStyle = {
-  fontSize: "1.2rem",
-  fontWeight: "400",
-  padding: "2rem 0",
-  width: "8rem",
-};
-
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -32,6 +25,15 @@ class Header extends Component {
     el.style.display === "block"
       ? (el.style.display = "none")
       : (el.style.display = "block");
+  }
+
+  componentDidMount() {
+    window.addEventListener("mouseup", (event) => {
+      const el = document.getElementById("currs");
+      if (event.target !== el && event.target.parentNode !== el) {
+        el.style.display = "none";
+      }
+    });
   }
 
   totalSum() {
@@ -65,7 +67,7 @@ class Header extends Component {
     }
     return (
       <div>
-        <div className="header">
+        <div className="header" id="header">
           {this.state.showCart && (
             <div className="cart-window">
               <h3>My Bag, {this.props.totalQuantity} items</h3>
@@ -98,18 +100,19 @@ class Header extends Component {
           )}
           <div className="header__left">
             {this.props.categories?.map((c) => (
-              <div
-                style={catStyle}
-                key={c.name}
-                onClick={() => this.selectCategory(c)}
-                className={
-                  c.name === this.props.currentCategory
-                    ? "category category-selected"
-                    : "category"
-                }
-              >
-                {c.name?.toUpperCase()}
-              </div>
+              <Link to="/" className="text-link">
+                <div
+                  key={c.name}
+                  onClick={() => this.selectCategory(c)}
+                  className={
+                    c.name === this.props.currentCategory
+                      ? "category category-selected"
+                      : "category"
+                  }
+                >
+                  {c.name?.toUpperCase()}
+                </div>
+              </Link>
             ))}
           </div>
 
@@ -121,7 +124,7 @@ class Header extends Component {
               className="currency flex-centered"
               onClick={this.toggleCurrencies}
             >
-              <p style={{ fontSize: "22px" }}>{this.props.currency.symbol}</p>
+              <p id="curr-symbol">{this.props.currency.symbol}</p>
               <p>
                 <MdKeyboardArrowDown size={15} />
               </p>

@@ -13,7 +13,6 @@ class CartPageProduct extends Component {
       counter: 2,
     };
   }
-
   // function for slide to next photo in gallery
   next() {
     const el =
@@ -23,14 +22,13 @@ class CartPageProduct extends Component {
     if (this.state.counter === this.state.images.length + 1) {
       el.style.transition = "transform 0.4s ease-in-out";
       el.style.transform = "translateX(" + -300 * this.state.counter + "px)";
-      setTimeout(() => {
-        el.style.transition = "none";
-        el.style.transform =
-          "translateX(" +
-          -300 * (this.state.counter - this.state.images.length) +
-          "px)";
-        this.setState({ counter: 2 });
-      }, 400);
+      this.setState({ counter: this.state.count + 1 });
+      el.style.transition = "none";
+      el.style.transform =
+        "translateX(" +
+        -300 * (this.state.counter - this.state.images.length) +
+        "px)";
+      this.setState({ counter: 2 });
     } else {
       //console.log(this.state.counter);
       el.style.transition = "transform 0.4s ease-in-out";
@@ -71,7 +69,7 @@ class CartPageProduct extends Component {
     return (
       <div className="cart-page-prod">
         <div className="cart-product">
-          <div className="info" style={{ marginLeft: "0", paddingLeft: 0 }}>
+          <div className="info cart-page-info">
             <div className="info-header page-info-header">
               <h1 id="brand">{prod.brand}</h1>
               <h1 id="name">{prod.name}</h1>
@@ -139,20 +137,22 @@ class CartPageProduct extends Component {
                   ))}
                   <img src={prod.gallery[0]} id="fistClone" alt="" />
                 </div>
-                <div className="cart-prod-arrows">
-                  <img
-                    id="left-arrow"
-                    src={arrow}
-                    onClick={() => this.prev()}
-                    alt="arrow"
-                  />
-                  <img
-                    id="right-arrow"
-                    src={arrow}
-                    onClick={() => this.next()}
-                    alt="arrow"
-                  />
-                </div>
+                {prod.gallery.length > 1 && (
+                  <div className="cart-prod-arrows">
+                    <img
+                      id="left-arrow"
+                      src={arrow}
+                      onClick={() => this.prev()}
+                      alt="arrow"
+                    />
+                    <img
+                      id="right-arrow"
+                      src={arrow}
+                      onClick={() => this.next()}
+                      alt="arrow"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>

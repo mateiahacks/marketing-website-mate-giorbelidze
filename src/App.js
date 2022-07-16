@@ -8,10 +8,6 @@ import Detailed from "./components/Detailed";
 import Cart from "./components/cart/Cart";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.fetchCategories();
     this.props.fetchCurrencies();

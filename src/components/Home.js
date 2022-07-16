@@ -7,10 +7,6 @@ import { fetchProducts } from "../actions/productsAction";
 import "./Home.css";
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.fetchProducts(this.props.currentCategory);
   }
@@ -26,7 +22,7 @@ class Home extends Component {
     return (
       <div className="home">
         <Header />
-        <div className="home__inner">
+        <div className="home__inner" id="home">
           <h1>
             {this.props.currentCategory &&
               this.capitalizeFirstLetter(this.props.currentCategory)}
