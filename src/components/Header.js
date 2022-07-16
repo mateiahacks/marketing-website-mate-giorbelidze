@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { BsCart2 } from "react-icons/bs";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setCategory } from "../actions/categoryAction";
 import { setCurrency, fetchCurrencies } from "../actions/currencyAction";
@@ -62,9 +62,6 @@ class Header extends Component {
   }
 
   render() {
-    if (this.state.redirect) {
-      return <Navigate to={this.state.redirect} />;
-    }
     return (
       <div>
         <div className="header" id="header">
